@@ -1,0 +1,10 @@
+Package: com.michael.bindfs
+Version:
+Section: System
+Name: bindfs
+Author: Halo Michael <yc992147156@me.com>
+Sponsor: Halo Michael <yc992147156@me.com>
+Maintainer: Halo Michael <yc992147156@me.com>
+Depends: firmware (>= 14.0)
+Architecture: iphoneos-arm
+Description: Mount folder to another location.
