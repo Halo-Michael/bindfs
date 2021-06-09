@@ -1,5 +1,5 @@
 TARGET = bindfs
-VERSION = 0.1.0
+VERSION = 0.1.1
 CC = xcrun -sdk iphoneos clang -arch arm64 -Os
 LDID = ldid
 SED = gsed
