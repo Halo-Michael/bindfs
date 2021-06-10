@@ -30,6 +30,7 @@ int main(int argc, char **argv) {
                 getmntopts(optarg, mopts, &mntflags, &dummy);
             }
             break;
+        case 'h':
         default:
             {
                 usage();
@@ -56,9 +57,8 @@ int main(int argc, char **argv) {
     mountpoint = (char *)realloc(mountpoint, (strlen(mountpoint) + 1) * sizeof(char));
 
     int mountStatus;
-    if ((mountStatus = mount("bindfs", mountpoint, mntflags, dir)) < 0) {
+    if ((mountStatus = mount("bindfs", mountpoint, mntflags, dir)) < 0)
         err(errno, "error on mount(): error = %d", mountStatus);
-    };
 
     return 0;
 }
