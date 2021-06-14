@@ -1,4 +1,3 @@
-#include <err.h>
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -15,7 +14,7 @@ struct mntopt mopts[] = {
 };
 
 void usage() {
-    puts("mount_bindfs [options] dir mountpoint");
+    printf("%s [options] dir mountpoint", getprogname());
     puts("options:");
     puts("\t-o opt[,opt,...]\tMount options.");
 }
@@ -34,7 +33,7 @@ int main(int argc, char **argv) {
         default:
             {
                 usage();
-                return 1;
+                return -1;
             }
         }
     }
@@ -43,22 +42,29 @@ int main(int argc, char **argv) {
 
     if (argc != 2) {
         usage();
-        return 1;
+        return -1;
     }
 
     char *dir = (char *)calloc(MAXPATHLEN, sizeof(char));
-    if (realpath(argv[0], dir) == NULL)
-        err(errno, "realpath dir %s", dir);
+    if (realpath(argv[0], dir) == NULL) {
+        printf("%s: failed to realpath dir %s - %s(%d)\n", getprogname(), dir, strerror(errno), errno);
+        free(dir);
+        return errno;
+    }
     dir = (char *)realloc(dir, (strlen(dir) + 1) * sizeof(char));
 
     char *mountpoint = (char *)calloc(MAXPATHLEN, sizeof(char));
-    if (realpath(argv[1], mountpoint) == NULL)
-        err(errno, "realpath mountpoint %s", mountpoint);
+    if (realpath(argv[1], mountpoint) == NULL) {
+        printf("%s: failed to realpath mountpoint %s - %s(%d)\n", getprogname(), mountpoint, strerror(errno), errno);
+        free(mountpoint);
+        return errno;
+    }
     mountpoint = (char *)realloc(mountpoint, (strlen(mountpoint) + 1) * sizeof(char));
 
-    int mountStatus;
-    if ((mountStatus = mount("bindfs", mountpoint, mntflags, dir)) < 0)
-        err(errno, "error on mount(): error = %d", mountStatus);
-
-    return 0;
+    int mountStatus = mount("bindfs", mountpoint, mntflags, dir);
+    if (mountStatus < 0)
+        printf("%s: failed to mount %s -> %s - %s(%d)\n", getprogname(), dir, mountpoint, strerror(errno), errno);
+    free(dir);
+    free(mountpoint);
+    return mountStatus == 0 ? 0 : errno;
 }

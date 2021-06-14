@@ -1,5 +1,5 @@
 TARGET = bindfs
-VERSION = 0.1.2
+VERSION = 0.1.4
 CC = xcrun -sdk iphoneos clang -arch arm64 -Os
 LDID = ldid
 SED = gsed
@@ -16,9 +16,9 @@ all: clean mount_bindfs
 	dpkg -b com.michael.bindfs_$(VERSION)_iphoneos-arm
 
 mount_bindfs: clean
-	$(CC) mount_bindfs.c -o mount_bindfs -lutil
+	$(CC) -miphoneos-version-min=14.0 mount_bindfs.c -o mount_bindfs -lutil
 	strip mount_bindfs
 	$(LDID) -Sentitlements.xml mount_bindfs
 
 clean:
-	rm -rf com.michael.bindfs_* mount_bindfs
+	rm -rf com.michael.bindfs_*_iphoneos-arm* mount_bindfs
