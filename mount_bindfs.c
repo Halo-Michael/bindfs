@@ -47,7 +47,7 @@ int main(int argc, char **argv) {
 
     char *dir = (char *)calloc(MAXPATHLEN, sizeof(char));
     if (realpath(argv[0], dir) == NULL) {
-        printf("%s: failed to realpath dir %s - %s(%d)\n", getprogname(), dir, strerror(errno), errno);
+        printf("%s: failed to realpath dir %s -> %s - %s(%d)\n", getprogname(), argv[0], dir, strerror(errno), errno);
         free(dir);
         return errno;
     }
@@ -55,7 +55,7 @@ int main(int argc, char **argv) {
 
     char *mountpoint = (char *)calloc(MAXPATHLEN, sizeof(char));
     if (realpath(argv[1], mountpoint) == NULL) {
-        printf("%s: failed to realpath mountpoint %s - %s(%d)\n", getprogname(), mountpoint, strerror(errno), errno);
+        printf("%s: failed to realpath mountpoint %s -> %s - %s(%d)\n", getprogname(), argv[1], mountpoint, strerror(errno), errno);
         free(mountpoint);
         return errno;
     }
