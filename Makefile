@@ -30,4 +30,4 @@ mount_bindfs.8:
 	$(TXT2MAN) -t 'MOUNT_BINDFS' -s 8 -v 'BSD General Commands Manual' -B mount_bindfs mount_bindfs.8.in > mount_bindfs.8
 
 clean:
-	rm -rf com.michael.bindfs_*_iphoneos-arm* mount_bindfs
+	rm -rf com.michael.bindfs_*_iphoneos-arm* mount_bindfs mount_bindfs.8
