@@ -1,0 +1,21 @@
+NAME
+  mount_bindfs - mount a bindfs filesystem
+SYNOPSIS
+  mount_bindfs [-o options] source destination
+DESCRIPTION
+  mount_bindfs mounts a directory tree under another directory. Both source and destination must be mounted read-only.
+OPTIONS
+  -o    mount(8) mount options
+EXIT STATUS
+  0    if OK
+  1    Generic Error - Such as 'Operation not permitted'
+  2    Either the source or destination does not exist
+  255  There are incorrect or missing options passwd to the program
+NOTES
+  If the kernel is patched (such as patched with checkra1n-kpf), then it might be possible to use bindfs even if the source is mounted read-write.
+REPORTING BUGS
+  Report all bugs to <https://github.com/Halo-Michael/bindfs/issues>.
+COPYRIGHT
+  Copyright Â ©2021 Halo Michael - All rights reserved.
+SEE ALSO
+  mount(8)
